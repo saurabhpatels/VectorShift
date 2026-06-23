@@ -1,10 +1,12 @@
-import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeInput, NodeSelect } from '../components/generic-node';
+import { useStore } from '../store';
 
 export const ConditionalNode = ({ id, data }) => {
-  const [operator, setOperator] = useState(data?.operator || 'contains');
-  const [value, setValue] = useState(data?.value || '');
+  const updateNodeField = useStore((state) => state.updateNodeField);
+
+  const operator = data?.operator ?? 'contains';
+  const value = data?.value ?? '';
 
   const handles = [
     { type: 'target', position: Position.Left, id: 'input' },
@@ -22,7 +24,7 @@ export const ConditionalNode = ({ id, data }) => {
       <NodeField label="Operator">
         <NodeSelect
           value={operator}
-          onChange={(e) => setOperator(e.target.value)}
+          onChange={(e) => updateNodeField(id, 'operator', e.target.value)}
         >
           <option value="equals">Equals</option>
           <option value="not_equals">Does Not Equal</option>
@@ -36,7 +38,7 @@ export const ConditionalNode = ({ id, data }) => {
       <NodeField label="Value to Compare">
         <NodeInput
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => updateNodeField(id, 'value', e.target.value)}
           placeholder="e.g. active"
         />
       </NodeField>

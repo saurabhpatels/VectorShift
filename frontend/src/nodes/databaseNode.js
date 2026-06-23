@@ -1,10 +1,12 @@
-import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeInput, NodeTextarea } from '../components/generic-node';
+import { useStore } from '../store';
 
 export const DatabaseNode = ({ id, data }) => {
-  const [connString, setConnString] = useState(data?.connString || 'postgresql://localhost:5432/mydb');
-  const [query, setQuery] = useState(data?.query || 'SELECT * FROM users LIMIT 10;');
+  const updateNodeField = useStore((state) => state.updateNodeField);
+
+  const connString = data?.connString ?? 'postgresql://localhost:5432/mydb';
+  const query = data?.query ?? 'SELECT * FROM users LIMIT 10;';
 
   const handles = [
     { type: 'target', position: Position.Left, id: 'query-params' },
@@ -21,7 +23,7 @@ export const DatabaseNode = ({ id, data }) => {
       <NodeField label="Connection URI">
         <NodeInput
           value={connString}
-          onChange={(e) => setConnString(e.target.value)}
+          onChange={(e) => updateNodeField(id, 'connString', e.target.value)}
           placeholder="postgresql://user:pass@host:port/db"
         />
       </NodeField>
@@ -29,7 +31,7 @@ export const DatabaseNode = ({ id, data }) => {
       <NodeField label="SQL Query">
         <NodeTextarea
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => updateNodeField(id, 'query', e.target.value)}
           placeholder="SELECT * FROM table;"
           rows={3}
         />

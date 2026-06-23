@@ -55,6 +55,26 @@ export const PipelineUI = () => {
 
   const getInitNodeData = (nodeID, type) => {
     let nodeData = { id: nodeID, nodeType: `${type}` };
+    if (type === 'customInput') {
+      nodeData.inputName = nodeID.replace('customInput-', 'input_');
+      nodeData.inputType = 'Text';
+    } else if (type === 'customOutput') {
+      nodeData.outputName = nodeID.replace('customOutput-', 'output_');
+      nodeData.outputType = 'Text';
+    } else if (type === 'text') {
+      nodeData.text = '{{input}}';
+    } else if (type === 'api') {
+      nodeData.method = 'GET';
+      nodeData.url = 'https://api.example.com/v1/data';
+    } else if (type === 'database') {
+      nodeData.connString = 'postgresql://localhost:5432/mydb';
+      nodeData.query = 'SELECT * FROM users LIMIT 10;';
+    } else if (type === 'conditional') {
+      nodeData.operator = 'contains';
+      nodeData.value = '';
+    } else if (type === 'python') {
+      nodeData.code = 'def main(input_val):\n    # Write Python code here\n    return input_val * 2\n';
+    }
     return nodeData;
   }
 

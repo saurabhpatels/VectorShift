@@ -1,9 +1,11 @@
-import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeTextarea } from '../components/generic-node';
+import { useStore } from '../store';
 
 export const PythonNode = ({ id, data }) => {
-  const [code, setCode] = useState(data?.code || 'def main(input_val):\n    # Write Python code here\n    return input_val * 2\n');
+  const updateNodeField = useStore((state) => state.updateNodeField);
+
+  const code = data?.code ?? 'def main(input_val):\n    # Write Python code here\n    return input_val * 2\n';
 
   const handles = [
     { type: 'target', position: Position.Left, id: 'input' },
@@ -20,7 +22,7 @@ export const PythonNode = ({ id, data }) => {
       <NodeField label="Python Code">
         <NodeTextarea
           value={code}
-          onChange={(e) => setCode(e.target.value)}
+          onChange={(e) => updateNodeField(id, 'code', e.target.value)}
           placeholder="def main(input_val):..."
           rows={5}
           className="font-mono text-[11px]"

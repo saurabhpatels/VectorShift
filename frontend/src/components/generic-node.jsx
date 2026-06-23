@@ -1,6 +1,19 @@
 import { Handle } from 'reactflow';
 import { cn } from 'lib/utils';
 import { ArrowRight, Brain, ArrowLeft, Type, Globe, Database, GitBranch, Terminal } from 'lucide-react';
+import {
+  NodeField,
+  NodeInput,
+  NodeSelect,
+  NodeTextarea
+} from './ui';
+
+export {
+  NodeField,
+  NodeInput,
+  NodeSelect,
+  NodeTextarea
+};
 
 export const nodeIcons = {
   customInput: ArrowRight,
@@ -12,10 +25,6 @@ export const nodeIcons = {
   conditional: GitBranch,
   python: Terminal,
 };
-
-// Shared base styles for all form controls (input, select, textarea)
-const fieldBaseStyles =
-  "nodrag w-full rounded-md border border-input px-2.5 py-1.5 text-xs bg-background text-foreground shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring";
 
 export function GenericNode({
   id,
@@ -122,52 +131,3 @@ export function GenericNode({
   );
 }
 
-// Subcomponents for rapid UI building
-export function NodeField({ label, children, className }) {
-  return (
-    <label className={cn("flex flex-col gap-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider", className)}>
-      {label}
-      {children}
-    </label>
-  );
-}
-
-export function NodeInput({ className, ...props }) {
-  return (
-    <input
-      type="text"
-      className={cn(
-        fieldBaseStyles,
-        className
-      )}
-      {...props}
-    />
-  );
-}
-
-export function NodeSelect({ children, className, ...props }) {
-  return (
-    <select
-      className={cn(
-        fieldBaseStyles,
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </select>
-  );
-}
-
-export function NodeTextarea({ className, ...props }) {
-  return (
-    <textarea
-      className={cn(
-        fieldBaseStyles,
-        "resize-none",
-        className
-      )}
-      {...props}
-    />
-  );
-}

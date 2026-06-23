@@ -1,17 +1,19 @@
-import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeInput, NodeSelect } from '../components/generic-node';
+import { useStore } from '../store';
 
 export const InputNode = ({ id, data }) => {
-  const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
-  const [inputType, setInputType] = useState(data.inputType || 'Text');
+  const updateNodeField = useStore((state) => state.updateNodeField);
+
+  const inputName = data?.inputName ?? id.replace('customInput-', 'input_');
+  const inputType = data?.inputType ?? 'Text';
 
   const handleNameChange = (e) => {
-    setCurrName(e.target.value);
+    updateNodeField(id, 'inputName', e.target.value);
   };
 
   const handleTypeChange = (e) => {
-    setInputType(e.target.value);
+    updateNodeField(id, 'inputType', e.target.value);
   };
 
   const handles = [
@@ -27,7 +29,7 @@ export const InputNode = ({ id, data }) => {
     >
       <NodeField label="Name">
         <NodeInput
-          value={currName}
+          value={inputName}
           onChange={handleNameChange}
         />
       </NodeField>

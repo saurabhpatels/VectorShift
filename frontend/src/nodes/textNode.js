@@ -13,18 +13,20 @@ export const TextNode = ({ id, data }) => {
   // Access the global Zustand store to observe and modify edges
   const edges = useStore((state) => state.edges);
   const onEdgesChange = useStore((state) => state.onEdgesChange);
+  const updateNodeField = useStore((state) => state.updateNodeField);
 
   const handleTextChange = (e) => {
     setCurrText(e.target.value);
   };
 
-  // Debounce currText to update debouncedText after 200ms
+  // Debounce currText to update debouncedText and store after 200ms
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedText(currText);
+      updateNodeField(id, 'text', currText);
     }, 200);
     return () => clearTimeout(handler);
-  }, [currText]);
+  }, [currText, id, updateNodeField]);
 
   // 1. Extract unique variables from debouncedText using a Set for deduplication
   const variables = useMemo(() => {

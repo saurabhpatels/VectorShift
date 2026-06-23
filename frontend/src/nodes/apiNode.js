@@ -1,10 +1,12 @@
-import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeInput, NodeSelect } from '../components/generic-node';
+import { useStore } from '../store';
 
 export const ApiNode = ({ id, data }) => {
-  const [method, setMethod] = useState(data?.method || 'GET');
-  const [url, setUrl] = useState(data?.url || 'https://api.example.com/v1/data');
+  const updateNodeField = useStore((state) => state.updateNodeField);
+
+  const method = data?.method ?? 'GET';
+  const url = data?.url ?? 'https://api.example.com/v1/data';
 
   const handles = [
     { type: 'target', position: Position.Left, id: 'payload' },
@@ -21,7 +23,7 @@ export const ApiNode = ({ id, data }) => {
       <NodeField label="HTTP Method">
         <NodeSelect
           value={method}
-          onChange={(e) => setMethod(e.target.value)}
+          onChange={(e) => updateNodeField(id, 'method', e.target.value)}
         >
           <option value="GET">GET</option>
           <option value="POST">POST</option>
@@ -33,7 +35,7 @@ export const ApiNode = ({ id, data }) => {
       <NodeField label="Endpoint URL">
         <NodeInput
           value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={(e) => updateNodeField(id, 'url', e.target.value)}
           placeholder="https://api.domain.com/endpoint"
         />
       </NodeField>
