@@ -4,7 +4,7 @@ import { Toaster } from 'sonner';
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col h-screen overflow-hidden">
       <PipelineToolbar />
       <PipelineUI />
       <Toaster position="top-right" closeButton />
