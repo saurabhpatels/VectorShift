@@ -2,7 +2,7 @@
 // Displays the drag-and-drop UI
 // --------------------------------------------------
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore } from './store';
 import { shallow } from 'zustand/shallow';
@@ -16,7 +16,7 @@ const proOptions = { hideAttribution: true };
 
 // Build nodeTypes dynamically from nodesConfig
 const nodeTypes = nodesConfig.reduce((acc, config) => {
-  acc[config.type] = config.useBaseNode === false ? config.component : BaseNode;
+  acc[config.type] = BaseNode;
   return acc;
 }, {});
 

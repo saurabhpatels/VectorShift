@@ -1,11 +1,10 @@
 import { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
-import { Position, useUpdateNodeInternals } from 'reactflow';
-import { GenericNode, NodeField } from '../components/generic-node';
+import { Position, useUpdateNodeInternals, Handle } from 'reactflow';
+import { NodeField } from '../components/generic-node';
 import { useStore } from '../store';
+import { cn } from 'lib/utils';
 
-import { Type } from 'lucide-react';
-
-export const TextNode = ({ id, data }) => {
+export const TextNodeInner = ({ id, data }) => {
   const [currText, setCurrText] = useState(data?.text || '{{input}}');
   const [debouncedText, setDebouncedText] = useState(currText);
   const [lineOffsets, setLineOffsets] = useState({});
@@ -92,12 +91,9 @@ export const TextNode = ({ id, data }) => {
     setLineOffsets(offsets);
   }, [currText, variables]);
 
-  // 3. Build handles: 1 static output on the right + dynamic input handles on the left
-  const handles = useMemo(() => {
-    const list = [
-      { type: 'source', position: Position.Right, id: 'output' }
-    ];
-
+  // 3. Build only dynamic input handles on the left (static output is handled by config)
+  const dynamicHandles = useMemo(() => {
+    const list = [];
     variables.forEach((varName) => {
       const topOffset = lineOffsets[varName];
       if (topOffset !== undefined) {
@@ -112,22 +108,21 @@ export const TextNode = ({ id, data }) => {
         });
       }
     });
-
     return list;
   }, [variables, lineOffsets]);
 
   // 4. Remeasure node layout when handles change
   useEffect(() => {
     updateNodeInternals(id);
-  }, [id, handles, updateNodeInternals]);
+  }, [id, dynamicHandles, updateNodeInternals]);
 
   // 5. Clean up any dangling edges when variables are deleted from the text
   useEffect(() => {
-    const activeHandleIds = handles.map((h) => `${id}-${h.id}`);
+    const activeHandleIds = dynamicHandles.map((h) => `${id}-${h.id}`);
 
-    // Find any edges targeting this node that point to a handle ID that no longer exists
+    // Find any edges targeting this node that point to a dynamic handle ID that no longer exists
     const orphanedEdges = edges.filter(
-      (edge) => edge.target === id && edge.targetHandle && !activeHandleIds.includes(edge.targetHandle)
+      (edge) => edge.target === id && edge.targetHandle && !activeHandleIds.includes(edge.targetHandle) && edge.targetHandle !== 'output'
     );
 
     if (orphanedEdges.length > 0) {
@@ -137,20 +132,13 @@ export const TextNode = ({ id, data }) => {
       }));
       onEdgesChange(edgeChanges);
     }
-  }, [id, handles, edges, onEdgesChange]);
+  }, [id, dynamicHandles, edges, onEdgesChange]);
 
   // Append a space if text ends with a newline to prevent mirror height collapse
   const displayText = currText.endsWith('\n') ? currText + ' ' : currText;
 
   return (
-    <GenericNode
-      id={id}
-      type="text"
-      title="Text"
-      icon={Type}
-      className="w-auto min-w-[200px]"
-      handles={handles}
-    >
+    <>
       <NodeField label="Text">
         <div ref={containerRef} className="relative min-w-[180px] max-w-[400px] w-full min-h-[40px] mt-1">
           {/* Invisible mirror used by the browser layout engine to measure size */}
@@ -166,7 +154,37 @@ export const TextNode = ({ id, data }) => {
           />
         </div>
       </NodeField>
-    </GenericNode>
+      {/* Explicitly render dynamic handles injected into BaseNode */}
+      {dynamicHandles.map((handle, index) => {
+        const handleId = `${id}-${handle.id}`;
+        return (
+          <Handle
+            key={`${handleId}-${index}`}
+            type={handle.type}
+            position={handle.position}
+            id={handleId}
+            style={handle.style}
+            className={cn(
+              "!bg-transparent !border-none cursor-pointer hover:scale-110 transition-transform",
+              handle.className
+            )}
+          >
+            <div
+              className={cn(
+                "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full border bg-background flex items-center justify-center pointer-events-none",
+                handle.isVariable ? "border-amber-500" : "border-primary"
+              )}
+            >
+              <div
+                className={cn(
+                  "w-1.5 h-1.5 rounded-full",
+                  handle.isVariable ? "bg-amber-500" : "bg-primary"
+                )}
+              />
+            </div>
+          </Handle>
+        );
+      })}
+    </>
   );
 };
-

@@ -4,7 +4,7 @@ import { ArrowRight, Brain, ArrowLeft, Type, Globe, Database, GitBranch, Termina
 import { InputNodeInner } from './nodes/inputNode';
 import { LLMNodeInner } from './nodes/llmNode';
 import { OutputNodeInner } from './nodes/outputNode';
-import { TextNode } from './nodes/textNode';
+import { TextNodeInner } from './nodes/textNode';
 import { ApiNodeInner } from './nodes/apiNode';
 import { DatabaseNodeInner } from './nodes/databaseNode';
 import { ConditionalNodeInner } from './nodes/conditionalNode';
@@ -40,9 +40,8 @@ export const nodesConfig = [
     type: 'text',
     label: 'Text',
     icon: Type,
-    component: TextNode,
-    handles: [],
-    useBaseNode: false // TextNode wraps itself to handle dynamic handles
+    component: TextNodeInner,
+    handles: [{ type: 'source', position: Position.Right, id: 'output' }]
   },
   {
     type: 'api',
