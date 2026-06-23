@@ -56,7 +56,7 @@ export function useVariableHandles({ text, containerRef, nodeId }) {
     });
 
     setOffsets(newOffsets);
-  }, [variables]);
+  }, [variables, containerRef]);
 
   const handles = useMemo(() => {
     return variables.map((v) => ({

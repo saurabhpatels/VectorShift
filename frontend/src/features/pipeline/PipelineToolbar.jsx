@@ -1,8 +1,8 @@
-import { DraggableNode } from './draggableNode';
-import { SubmitButton } from './submit';
-import { nodesConfig } from './nodesConfig';
+import { DraggableNode } from '../../components/DraggableNode';
+import { SubmitButton } from './SubmitPipeline';
+import { nodesConfig } from '../../config/nodesConfig';
 import { Moon, Sun } from 'lucide-react';
-import { useStore } from './store';
+import { useStore } from '../../store/usePipelineStore';
 
 export const PipelineToolbar = () => {
   const isDarkMode = useStore((state) => state.isDarkMode);

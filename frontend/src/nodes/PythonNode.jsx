@@ -1,5 +1,5 @@
-import { NodeField, NodeTextarea } from '../components/generic-node';
-import { useStore } from '../store';
+import { NodeField, NodeTextarea } from '../components/GenericNode';
+import { useStore } from '../store/usePipelineStore';
 
 export const PythonNodeInner = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);

@@ -1,5 +1,5 @@
-import { NodeField, NodeInput, NodeTextarea } from '../components/generic-node';
-import { useStore } from '../store';
+import { NodeField, NodeInput, NodeTextarea } from '../components/GenericNode';
+import { useStore } from '../store/usePipelineStore';
 
 export const DatabaseNodeInner = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);

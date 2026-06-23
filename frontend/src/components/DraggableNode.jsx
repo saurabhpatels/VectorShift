@@ -11,7 +11,7 @@ export const DraggableNode = ({ type, label, icon: Icon }) => {
   return (
     <div
       className={cn(
-        "cursor-grab px-3.5 py-2 flex items-center gap-2 rounded-lg border border-border bg-background text-foreground text-xs font-semibold shadow-sm transition-all duration-200 select-none hover:scale-[1.02] hover:shadow hover:border-primary/50 hover:bg-muted/50 active:scale-[0.98] active:cursor-grabbing group"
+        "cursor-grab px-3.5 py-2 flex flex-col items-center gap-2 rounded-lg border border-border bg-background text-foreground text-xs font-semibold shadow-sm transition-all duration-200 select-none hover:scale-[1.02] hover:shadow hover:border-primary/50 hover:bg-muted/50 active:scale-[0.98] active:cursor-grabbing group"
       )}
       onDragStart={(event) => onDragStart(event, type)}
       onDragEnd={(event) => (event.target.style.cursor = 'grab')}

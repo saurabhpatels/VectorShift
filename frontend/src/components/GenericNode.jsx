@@ -6,7 +6,7 @@ import {
   NodeSelect,
   NodeTextarea
 } from './ui';
-import { nodesConfig } from '../nodesConfig';
+import { nodesConfig } from '../config/nodesConfig';
 
 export {
   NodeField,
@@ -39,7 +39,7 @@ export function GenericNode({
     <div
       className={cn(
         "bg-card text-card-foreground relative rounded-xl border border-border overflow-visible transition-all duration-200 shadow-md hover:shadow-lg hover:border-muted-foreground/30",
-        "w-60 hover:ring-1",
+        "min-w-[240px] w-full h-full flex flex-col hover:ring-1",
         "in-[.selected]:border-muted-foreground",
         "in-[.selected]:shadow-lg",
         className
@@ -106,7 +106,7 @@ export function GenericNode({
       </header>
 
       {/* Content */}
-      <div data-slot="base-node-content" className="px-3.5 py-3 space-y-3">
+      <div data-slot="base-node-content" className="px-3.5 py-3 space-y-3 flex-1 flex flex-col">
         {children}
       </div>
 

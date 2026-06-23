@@ -1,5 +1,5 @@
-import { NodeField, NodeInput, NodeSelect } from '../components/generic-node';
-import { useStore } from '../store';
+import { NodeField, NodeInput, NodeSelect } from '../components/GenericNode';
+import { useStore } from '../store/usePipelineStore';
 
 export const InputNodeInner = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);

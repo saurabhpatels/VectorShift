@@ -1,14 +1,14 @@
 import { Position } from 'reactflow';
 import { ArrowRight, Brain, ArrowLeft, Type, Globe, Database, GitBranch, Terminal } from 'lucide-react';
 
-import { InputNodeInner } from './nodes/inputNode';
-import { LLMNodeInner } from './nodes/llmNode';
-import { OutputNodeInner } from './nodes/outputNode';
-import { TextNodeInner } from './nodes/textNode';
-import { ApiNodeInner } from './nodes/apiNode';
-import { DatabaseNodeInner } from './nodes/databaseNode';
-import { ConditionalNodeInner } from './nodes/conditionalNode';
-import { PythonNodeInner } from './nodes/pythonNode';
+import { InputNodeInner } from '../nodes/InputNode';
+import { LLMNodeInner } from '../nodes/LlmNode';
+import { OutputNodeInner } from '../nodes/OutputNode';
+import { TextNodeInner } from '../nodes/TextNode';
+import { ApiNodeInner } from '../nodes/ApiNode';
+import { DatabaseNodeInner } from '../nodes/DatabaseNode';
+import { ConditionalNodeInner } from '../nodes/ConditionalNode';
+import { PythonNodeInner } from '../nodes/PythonNode';
 
 export const nodesConfig = [
   {

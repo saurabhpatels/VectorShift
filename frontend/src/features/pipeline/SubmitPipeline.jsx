@@ -1,4 +1,4 @@
-import { useStore } from './store';
+import { useStore } from '../../store/usePipelineStore';
 import { toast } from 'sonner';
 
 export const SubmitButton = () => {

@@ -2,12 +2,12 @@
 // Displays the drag-and-drop UI
 // --------------------------------------------------
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
-import { useStore } from './store';
+import { useStore } from '../../store/usePipelineStore';
 import { shallow } from 'zustand/shallow';
-import { BaseNode } from './components/generic-node';
-import { nodesConfig } from './nodesConfig';
+import { BaseNode } from '../../components/GenericNode';
+import { nodesConfig } from '../../config/nodesConfig';
 
 import 'reactflow/dist/style.css';
 

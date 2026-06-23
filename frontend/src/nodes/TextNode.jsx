@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Handle, useUpdateNodeInternals } from 'reactflow';
-import { NodeField } from '../components/generic-node';
-import { useStore } from '../store';
+import { NodeField } from '../components/GenericNode';
+import { useStore } from '../store/usePipelineStore';
 import { cn } from 'lib/utils';
 import { renderParsedText } from 'utils/common';
 import { useDebounce, useVariableHandles, useCleanupEdges } from '../hooks';

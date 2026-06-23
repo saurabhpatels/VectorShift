@@ -1,5 +1,5 @@
-import { PipelineToolbar } from './toolbar';
-import { PipelineUI } from './ui';
+import { PipelineToolbar } from './features/pipeline/PipelineToolbar';
+import { PipelineUI } from './features/pipeline/PipelineCanvas';
 import { Toaster } from 'sonner';
 
 function App() {
