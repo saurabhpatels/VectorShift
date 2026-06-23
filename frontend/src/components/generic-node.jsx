@@ -1,5 +1,4 @@
 import { Handle } from 'reactflow';
-import { BaseNode, BaseNodeHeader, BaseNodeHeaderTitle, BaseNodeContent, BaseNodeFooter } from './base-node';
 import { cn } from 'lib/utils';
 import { ArrowRight, Brain, ArrowLeft, Type, Globe, Database, GitBranch, Terminal } from 'lucide-react';
 
@@ -13,6 +12,10 @@ export const nodeIcons = {
   conditional: GitBranch,
   python: Terminal,
 };
+
+// Shared base styles for all form controls (input, select, textarea)
+const fieldBaseStyles =
+  "nodrag w-full rounded-md border border-input px-2.5 py-1.5 text-xs bg-background text-foreground shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring";
 
 export function GenericNode({
   id,
@@ -35,11 +38,15 @@ export function GenericNode({
   const sideIndices = {};
 
   return (
-    <BaseNode
+    <div
       className={cn(
-        "w-60 shadow-md relative bg-card rounded-xl border border-border overflow-visible transition-all duration-200 hover:shadow-lg hover:border-muted-foreground/30",
+        "bg-card text-card-foreground relative rounded-xl border border-border overflow-visible transition-all duration-200 shadow-md hover:shadow-lg hover:border-muted-foreground/30",
+        "w-60 hover:ring-1",
+        "in-[.selected]:border-muted-foreground",
+        "in-[.selected]:shadow-lg",
         className
       )}
+      tabIndex={0}
       {...props}
     >
       {/* Handles */}
@@ -88,27 +95,30 @@ export function GenericNode({
       })}
 
       {/* Header */}
-      <BaseNodeHeader className="flex items-center justify-between gap-2 border-b border-border bg-muted/30 px-3.5 py-2.5 rounded-t-xl">
+      <header className="flex items-center justify-between gap-2 border-b border-border bg-muted/30 px-3.5 py-2.5 rounded-t-xl">
         <div className="flex items-center gap-2">
           {Icon && <Icon className="w-4 h-4 text-muted-foreground" />}
-          <BaseNodeHeaderTitle className="text-xs font-semibold text-foreground tracking-wide uppercase">
+          <h3
+            data-slot="base-node-title"
+            className="user-select-none flex-1 text-xs font-semibold text-foreground tracking-wide uppercase"
+          >
             {title}
-          </BaseNodeHeaderTitle>
+          </h3>
         </div>
-      </BaseNodeHeader>
+      </header>
 
       {/* Content */}
-      <BaseNodeContent className="px-3.5 py-3 space-y-3">
+      <div data-slot="base-node-content" className="px-3.5 py-3 space-y-3">
         {children}
-      </BaseNodeContent>
+      </div>
 
       {/* Footer */}
       {footer && (
-        <BaseNodeFooter className="border-t border-border bg-muted/10 px-3.5 py-2">
+        <div data-slot="base-node-footer" className="border-t border-border bg-muted/10 px-3.5 py-2">
           {footer}
-        </BaseNodeFooter>
+        </div>
       )}
-    </BaseNode>
+    </div>
   );
 }
 
@@ -127,7 +137,7 @@ export function NodeInput({ className, ...props }) {
     <input
       type="text"
       className={cn(
-        "nodrag w-full rounded-md border border-input px-2.5 py-1.5 text-xs bg-background text-foreground shadow-sm placeholder:text-muted-foreground/60 transition-colors focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring",
+        fieldBaseStyles,
         className
       )}
       {...props}
@@ -139,7 +149,7 @@ export function NodeSelect({ children, className, ...props }) {
   return (
     <select
       className={cn(
-        "nodrag w-full rounded-md border border-input px-2.5 py-1.5 text-xs bg-background text-foreground shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring",
+        fieldBaseStyles,
         className
       )}
       {...props}
@@ -153,7 +163,8 @@ export function NodeTextarea({ className, ...props }) {
   return (
     <textarea
       className={cn(
-        "nodrag w-full rounded-md border border-input px-2.5 py-1.5 text-xs bg-background text-foreground shadow-sm placeholder:text-muted-foreground/60 transition-colors focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring resize-none",
+        fieldBaseStyles,
+        "resize-none",
         className
       )}
       {...props}
