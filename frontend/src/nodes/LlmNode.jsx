@@ -28,8 +28,8 @@ export const LLMNodeInner = ({ id, data }) => {
         <MoveDiagonal2 size={16}
           style={{
             position: 'absolute',
-            right: 5,
-            bottom: 5,
+            right: -9,
+            bottom: -8,
             stroke: 'hsl(var(--muted-foreground))',
           }} />
       </NodeResizeControl>
@@ -43,7 +43,7 @@ export const LLMNodeInner = ({ id, data }) => {
         />
       </NodeField>
 
-      <NodeField label="Model">
+      <NodeField label="Model" className="pb-3">
         <NodeSelect value={model} onChange={(e) => setModel(e.target.value)}>
           <option value="gpt-4">ChatGPT (GPT-4)</option>
           <option value="gpt-3.5">ChatGPT (GPT-3.5)</option>
