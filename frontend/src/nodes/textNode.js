@@ -3,6 +3,8 @@ import { Position, useUpdateNodeInternals } from 'reactflow';
 import { GenericNode, NodeField } from '../components/generic-node';
 import { useStore } from '../store';
 
+import { Type } from 'lucide-react';
+
 export const TextNode = ({ id, data }) => {
   const [currText, setCurrText] = useState(data?.text || '{{input}}');
   const [debouncedText, setDebouncedText] = useState(currText);
@@ -145,6 +147,7 @@ export const TextNode = ({ id, data }) => {
       id={id}
       type="text"
       title="Text"
+      icon={Type}
       className="w-auto min-w-[200px]"
       handles={handles}
     >

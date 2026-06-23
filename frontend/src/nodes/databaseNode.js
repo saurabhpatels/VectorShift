@@ -1,25 +1,14 @@
-import { Position } from 'reactflow';
-import { GenericNode, NodeField, NodeInput, NodeTextarea } from '../components/generic-node';
+import { NodeField, NodeInput, NodeTextarea } from '../components/generic-node';
 import { useStore } from '../store';
 
-export const DatabaseNode = ({ id, data }) => {
+export const DatabaseNodeInner = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);
 
   const connString = data?.connString ?? 'postgresql://localhost:5432/mydb';
   const query = data?.query ?? 'SELECT * FROM users LIMIT 10;';
 
-  const handles = [
-    { type: 'target', position: Position.Left, id: 'query-params' },
-    { type: 'source', position: Position.Right, id: 'results' }
-  ];
-
   return (
-    <GenericNode
-      id={id}
-      type="database"
-      title="Database Query"
-      handles={handles}
-    >
+    <>
       <NodeField label="Connection URI">
         <NodeInput
           value={connString}
@@ -36,6 +25,6 @@ export const DatabaseNode = ({ id, data }) => {
           rows={3}
         />
       </NodeField>
-    </GenericNode>
+    </>
   );
-}
+};

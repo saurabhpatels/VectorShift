@@ -1,26 +1,14 @@
-import { Position } from 'reactflow';
-import { GenericNode, NodeField, NodeInput, NodeSelect } from '../components/generic-node';
+import { NodeField, NodeInput, NodeSelect } from '../components/generic-node';
 import { useStore } from '../store';
 
-export const ConditionalNode = ({ id, data }) => {
+export const ConditionalNodeInner = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);
 
   const operator = data?.operator ?? 'contains';
   const value = data?.value ?? '';
 
-  const handles = [
-    { type: 'target', position: Position.Left, id: 'input' },
-    { type: 'source', position: Position.Right, id: 'true' },
-    { type: 'source', position: Position.Right, id: 'false' }
-  ];
-
   return (
-    <GenericNode
-      id={id}
-      type="conditional"
-      title="Conditional Router"
-      handles={handles}
-    >
+    <>
       <NodeField label="Operator">
         <NodeSelect
           value={operator}
@@ -42,6 +30,6 @@ export const ConditionalNode = ({ id, data }) => {
           placeholder="e.g. active"
         />
       </NodeField>
-    </GenericNode>
+    </>
   );
-}
+};

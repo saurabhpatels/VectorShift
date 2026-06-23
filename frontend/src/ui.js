@@ -6,29 +6,19 @@ import { useState, useRef, useCallback } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore } from './store';
 import { shallow } from 'zustand/shallow';
-import { InputNode } from './nodes/inputNode';
-import { LLMNode } from './nodes/llmNode';
-import { OutputNode } from './nodes/outputNode';
-import { TextNode } from './nodes/textNode';
-import { ApiNode } from './nodes/apiNode';
-import { DatabaseNode } from './nodes/databaseNode';
-import { ConditionalNode } from './nodes/conditionalNode';
-import { PythonNode } from './nodes/pythonNode';
+import { BaseNode } from './components/generic-node';
+import { nodesConfig } from './nodesConfig';
 
 import 'reactflow/dist/style.css';
 
 const gridSize = 20;
 const proOptions = { hideAttribution: true };
-const nodeTypes = {
-  customInput: InputNode,
-  llm: LLMNode,
-  customOutput: OutputNode,
-  text: TextNode,
-  api: ApiNode,
-  database: DatabaseNode,
-  conditional: ConditionalNode,
-  python: PythonNode,
-};
+
+// Build nodeTypes dynamically from nodesConfig
+const nodeTypes = nodesConfig.reduce((acc, config) => {
+  acc[config.type] = config.useBaseNode === false ? config.component : BaseNode;
+  return acc;
+}, {});
 
 const selector = (state) => ({
   nodes: state.nodes,
@@ -54,29 +44,8 @@ export const PipelineUI = () => {
   } = useStore(selector, shallow);
 
   const getInitNodeData = (nodeID, type) => {
-    let nodeData = { id: nodeID, nodeType: `${type}` };
-    if (type === 'customInput') {
-      nodeData.inputName = nodeID.replace('customInput-', 'input_');
-      nodeData.inputType = 'Text';
-    } else if (type === 'customOutput') {
-      nodeData.outputName = nodeID.replace('customOutput-', 'output_');
-      nodeData.outputType = 'Text';
-    } else if (type === 'text') {
-      nodeData.text = '{{input}}';
-    } else if (type === 'api') {
-      nodeData.method = 'GET';
-      nodeData.url = 'https://api.example.com/v1/data';
-    } else if (type === 'database') {
-      nodeData.connString = 'postgresql://localhost:5432/mydb';
-      nodeData.query = 'SELECT * FROM users LIMIT 10;';
-    } else if (type === 'conditional') {
-      nodeData.operator = 'contains';
-      nodeData.value = '';
-    } else if (type === 'python') {
-      nodeData.code = 'def main(input_val):\n    # Write Python code here\n    return input_val * 2\n';
-    }
-    return nodeData;
-  }
+    return { id: nodeID, nodeType: type };
+  };
 
   const onDrop = useCallback(
     (event) => {
@@ -108,7 +77,7 @@ export const PipelineUI = () => {
         addNode(newNode);
       }
     },
-    [reactFlowInstance]
+    [reactFlowInstance, addNode, getNodeID]
   );
 
   const onDragOver = useCallback((event) => {

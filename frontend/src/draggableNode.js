@@ -1,15 +1,12 @@
 import { cn } from 'lib/utils';
-import { nodeIcons } from './components/generic-node';
 
-export const DraggableNode = ({ type, label }) => {
+export const DraggableNode = ({ type, label, icon: Icon }) => {
   const onDragStart = (event, nodeType) => {
     const appData = { nodeType }
     event.target.style.cursor = 'grabbing';
     event.dataTransfer.setData('application/reactflow', JSON.stringify(appData));
     event.dataTransfer.effectAllowed = 'move';
   };
-
-  const Icon = nodeIcons[type];
 
   return (
     <div

@@ -1,12 +1,12 @@
 import { Handle } from 'reactflow';
 import { cn } from 'lib/utils';
-import { ArrowRight, Brain, ArrowLeft, Type, Globe, Database, GitBranch, Terminal } from 'lucide-react';
 import {
   NodeField,
   NodeInput,
   NodeSelect,
   NodeTextarea
 } from './ui';
+import { nodesConfig } from '../nodesConfig';
 
 export {
   NodeField,
@@ -15,28 +15,17 @@ export {
   NodeTextarea
 };
 
-export const nodeIcons = {
-  customInput: ArrowRight,
-  llm: Brain,
-  customOutput: ArrowLeft,
-  text: Type,
-  api: Globe,
-  database: Database,
-  conditional: GitBranch,
-  python: Terminal,
-};
-
 export function GenericNode({
   id,
   type,
   title,
+  icon: Icon,
   handles = [],
   children,
   footer,
   className,
   ...props
 }) {
-  const Icon = nodeIcons[type];
   // Count how many handles are on each side of each type
   const sideCounts = {};
   handles.forEach((h) => {
@@ -131,3 +120,22 @@ export function GenericNode({
   );
 }
 
+export const BaseNode = (props) => {
+  const { id, type, data, selected } = props;
+  const config = nodesConfig.find(n => n.type === type);
+  if (!config) return null;
+  const Component = config.component;
+
+  return (
+    <GenericNode
+      id={id}
+      type={type}
+      title={config.label}
+      icon={config.icon}
+      handles={config.handles}
+      className={selected ? 'selected' : ''}
+    >
+      <Component id={id} data={data} />
+    </GenericNode>
+  );
+};
