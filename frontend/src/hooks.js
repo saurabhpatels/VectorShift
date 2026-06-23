@@ -52,7 +52,7 @@ export function useVariableHandles({ text, containerRef, nodeId }) {
         cur = cur.offsetParent;
       }
 
-      newOffsets[v] = offset + el.offsetHeight / 2;
+      newOffsets[v] = offset;
     });
 
     setOffsets(newOffsets);

@@ -11,6 +11,16 @@ import {
 export const useStore = create((set, get) => ({
     nodes: [],
     edges: [],
+    isDarkMode: false,
+    toggleDarkMode: () => {
+      const newMode = !get().isDarkMode;
+      set({ isDarkMode: newMode });
+      if (newMode) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    },
     getNodeID: (type) => {
         const newIDs = {...get().nodeIDs};
         if (newIDs[type] === undefined) {
