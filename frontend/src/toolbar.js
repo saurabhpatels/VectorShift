@@ -1,11 +1,9 @@
 import { DraggableNode } from './draggableNode';
+import { SubmitButton } from './submit';
 
 export const PipelineToolbar = () => {
   return (
-    <div className="p-5 bg-card border-b border-border shadow-sm">
-      <h2 className="text-xs font-bold text-muted-foreground tracking-widest uppercase mb-4 px-1">
-        Node Palette (Drag & Drop)
-      </h2>
+    <div className="p-5 flex items-center justify-between gap-5 bg-card border-b border-border shadow-sm">
       <div className="flex flex-wrap gap-3">
         <DraggableNode type='customInput' label='Input' />
         <DraggableNode type='llm' label='LLM' />
@@ -16,6 +14,7 @@ export const PipelineToolbar = () => {
         <DraggableNode type='conditional' label='Conditional' />
         <DraggableNode type='python' label='Python Script' />
       </div>
+      <SubmitButton />
     </div>
   );
 };

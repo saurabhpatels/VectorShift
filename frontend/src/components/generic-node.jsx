@@ -1,18 +1,30 @@
 import { Handle } from 'reactflow';
 import { BaseNode, BaseNodeHeader, BaseNodeHeaderTitle, BaseNodeContent, BaseNodeFooter } from './base-node';
 import { cn } from 'lib/utils';
+import { ArrowRight, Brain, ArrowLeft, Type, Globe, Database, GitBranch, Terminal } from 'lucide-react';
+
+export const nodeIcons = {
+  customInput: ArrowRight,
+  llm: Brain,
+  customOutput: ArrowLeft,
+  text: Type,
+  api: Globe,
+  database: Database,
+  conditional: GitBranch,
+  python: Terminal,
+};
 
 export function GenericNode({
   id,
+  type,
   title,
-  icon: Icon,
-  accentColor = "border-t-2 border-t-primary",
   handles = [],
   children,
   footer,
   className,
   ...props
 }) {
+  const Icon = nodeIcons[type];
   // Count how many handles are on each side of each type
   const sideCounts = {};
   handles.forEach((h) => {
@@ -26,7 +38,6 @@ export function GenericNode({
     <BaseNode
       className={cn(
         "w-60 shadow-md relative bg-card rounded-xl border border-border overflow-visible transition-all duration-200 hover:shadow-lg hover:border-muted-foreground/30",
-        accentColor,
         className
       )}
       {...props}
@@ -53,10 +64,26 @@ export function GenericNode({
             id={handleId}
             style={finalStyle}
             className={cn(
-              "w-2.5 h-2.5  border-2 border-primary hover:!bg-primary transition-colors cursor-pointer",
+              "!bg-transparent !border-none cursor-pointer hover:scale-110 transition-transform",
               handle.className
             )}
-          />
+          >
+            {/* Outer Circle (1px border) */}
+            <div
+              className={cn(
+                "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full border bg-background flex items-center justify-center pointer-events-none",
+                handle.isVariable ? "border-amber-500" : "border-primary"
+              )}
+            >
+              {/* Inner Dot */}
+              <div
+                className={cn(
+                  "w-1.5 h-1.5 rounded-full",
+                  handle.isVariable ? "bg-amber-500" : "bg-primary"
+                )}
+              />
+            </div>
+          </Handle>
         );
       })}
 

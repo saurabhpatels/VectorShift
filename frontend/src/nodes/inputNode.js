@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeInput, NodeSelect } from '../components/generic-node';
-import { ArrowRight } from 'lucide-react';
 
 export const InputNode = ({ id, data }) => {
   const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
@@ -22,9 +21,8 @@ export const InputNode = ({ id, data }) => {
   return (
     <GenericNode
       id={id}
+      type="customInput"
       title="Input"
-      icon={ArrowRight}
-      accentColor="border-t-2 border-t-blue-500"
       handles={handles}
     >
       <NodeField label="Name">

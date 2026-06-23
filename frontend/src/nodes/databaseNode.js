@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeInput, NodeTextarea } from '../components/generic-node';
-import { Database } from 'lucide-react';
 
 export const DatabaseNode = ({ id, data }) => {
   const [connString, setConnString] = useState(data?.connString || 'postgresql://localhost:5432/mydb');
@@ -15,9 +14,8 @@ export const DatabaseNode = ({ id, data }) => {
   return (
     <GenericNode
       id={id}
+      type="database"
       title="Database Query"
-      icon={Database}
-      accentColor="border-t-2 border-t-indigo-500"
       handles={handles}
     >
       <NodeField label="Connection URI">

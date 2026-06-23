@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeInput, NodeSelect } from '../components/generic-node';
-import { GitBranch } from 'lucide-react';
 
 export const ConditionalNode = ({ id, data }) => {
   const [operator, setOperator] = useState(data?.operator || 'contains');
@@ -16,9 +15,8 @@ export const ConditionalNode = ({ id, data }) => {
   return (
     <GenericNode
       id={id}
+      type="conditional"
       title="Conditional Router"
-      icon={GitBranch}
-      accentColor="border-t-2 border-t-emerald-500"
       handles={handles}
     >
       <NodeField label="Operator">

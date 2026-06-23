@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeInput, NodeSelect } from '../components/generic-node';
-import { Globe } from 'lucide-react';
 
 export const ApiNode = ({ id, data }) => {
   const [method, setMethod] = useState(data?.method || 'GET');
@@ -15,9 +14,8 @@ export const ApiNode = ({ id, data }) => {
   return (
     <GenericNode
       id={id}
+      type="api"
       title="API Request"
-      icon={Globe}
-      accentColor="border-t-2 border-t-violet-500"
       handles={handles}
     >
       <NodeField label="HTTP Method">

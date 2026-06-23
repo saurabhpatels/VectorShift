@@ -1,4 +1,5 @@
 import { cn } from 'lib/utils';
+import { nodeIcons } from './components/generic-node';
 
 export const DraggableNode = ({ type, label }) => {
   const onDragStart = (event, nodeType) => {
@@ -8,18 +9,21 @@ export const DraggableNode = ({ type, label }) => {
     event.dataTransfer.effectAllowed = 'move';
   };
 
+  const Icon = nodeIcons[type];
+
   return (
     <div
       className={cn(
-        type,
-        "cursor-grab px-4 py-2.5 min-w-[100px] h-12 flex items-center justify-center rounded-lg border border-border bg-background text-foreground text-xs font-medium shadow-sm transition-all duration-200 select-none",
-        "hover:border-primary/50 hover:bg-muted/50 hover:shadow active:cursor-grabbing"
+        "cursor-grab px-3.5 py-2 flex items-center gap-2 rounded-lg border border-border bg-background text-foreground text-xs font-semibold shadow-sm transition-all duration-200 select-none hover:scale-[1.02] hover:shadow hover:border-primary/50 hover:bg-muted/50 active:scale-[0.98] active:cursor-grabbing group"
       )}
       onDragStart={(event) => onDragStart(event, type)}
       onDragEnd={(event) => (event.target.style.cursor = 'grab')}
       draggable
     >
-      <span>{label}</span>
+      {Icon && (
+        <Icon className="w-3.5 h-3.5 text-muted-foreground transition-colors group-hover:text-primary" />
+      )}
+      <span className="text-foreground transition-colors">{label}</span>
     </div>
   );
 };

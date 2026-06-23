@@ -1,6 +1,5 @@
 import { Position } from 'reactflow';
 import { GenericNode } from '../components/generic-node';
-import { Brain } from 'lucide-react';
 
 export const LLMNode = ({ id, data }) => {
   const handles = [
@@ -12,9 +11,8 @@ export const LLMNode = ({ id, data }) => {
   return (
     <GenericNode
       id={id}
+      type="llm"
       title="LLM"
-      icon={Brain}
-      accentColor="border-t-2 border-t-purple-500"
       handles={handles}
     >
       <div className="text-xs text-muted-foreground leading-relaxed">

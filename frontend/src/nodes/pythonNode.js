@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Position } from 'reactflow';
 import { GenericNode, NodeField, NodeTextarea } from '../components/generic-node';
-import { Terminal } from 'lucide-react';
 
 export const PythonNode = ({ id, data }) => {
   const [code, setCode] = useState(data?.code || 'def main(input_val):\n    # Write Python code here\n    return input_val * 2\n');
@@ -14,9 +13,8 @@ export const PythonNode = ({ id, data }) => {
   return (
     <GenericNode
       id={id}
+      type="python"
       title="Python Script"
-      icon={Terminal}
-      accentColor="border-t-2 border-t-teal-500"
       handles={handles}
     >
       <NodeField label="Python Code">
