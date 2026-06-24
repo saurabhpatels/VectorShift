@@ -4,7 +4,9 @@ import {
   NodeField,
   NodeInput,
   NodeSelect,
-  NodeTextarea
+  NodeTextarea,
+  NodeCheckbox,
+  NodeRadio
 } from './ui';
 import { nodesConfig } from '../config/nodesConfig';
 
@@ -12,7 +14,9 @@ export {
   NodeField,
   NodeInput,
   NodeSelect,
-  NodeTextarea
+  NodeTextarea,
+  NodeCheckbox,
+  NodeRadio
 };
 
 export function GenericNode({

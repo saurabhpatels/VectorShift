@@ -16,6 +16,7 @@ export const PipelineToolbar = () => {
         ))}
       </div>
       <div className="flex items-center gap-3">
+        <SubmitButton />
         <button
           onClick={toggleDarkMode}
           className="p-2 rounded-md hover:bg-muted/50 border border-transparent hover:border-border transition-colors text-foreground"
@@ -23,7 +24,6 @@ export const PipelineToolbar = () => {
         >
           {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </button>
-        <SubmitButton />
       </div>
     </div>
   );

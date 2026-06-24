@@ -1,5 +1,5 @@
 import { Position } from 'reactflow';
-import { ArrowRight, Brain, ArrowLeft, Type, Globe, Database, GitBranch, Terminal } from 'lucide-react';
+import { ArrowRight, Brain, Lightbulb, Type, Globe, Database, GitBranch, Terminal, Settings, ShieldAlert } from 'lucide-react';
 
 import { InputNodeInner } from '../nodes/InputNode';
 import { LLMNodeInner } from '../nodes/LlmNode';
@@ -9,6 +9,8 @@ import { ApiNodeInner } from '../nodes/ApiNode';
 import { DatabaseNodeInner } from '../nodes/DatabaseNode';
 import { ConditionalNodeInner } from '../nodes/ConditionalNode';
 import { PythonNodeInner } from '../nodes/PythonNode';
+import { AgentConfigNodeInner } from '../nodes/AgentConfigNode';
+import { ToolApprovalNodeInner } from '../nodes/ToolApprovalNode';
 
 export const nodesConfig = [
   {
@@ -19,22 +21,14 @@ export const nodesConfig = [
     handles: [{ type: 'source', position: Position.Right, id: 'value' }]
   },
   {
-    type: 'llm',
-    label: 'LLM',
-    icon: Brain,
-    component: LLMNodeInner,
+    type: 'agentConfig',
+    label: 'Agent Config',
+    icon: Settings,
+    component: AgentConfigNodeInner,
     handles: [
-      { type: 'target', position: Position.Left, id: 'system' },
-      { type: 'target', position: Position.Left, id: 'prompt' },
-      { type: 'source', position: Position.Right, id: 'response' }
+      { type: 'target', position: Position.Left, id: 'trigger' },
+      { type: 'source', position: Position.Right, id: 'settings' }
     ]
-  },
-  {
-    type: 'customOutput',
-    label: 'Output',
-    icon: ArrowLeft,
-    component: OutputNodeInner,
-    handles: [{ type: 'target', position: Position.Left, id: 'value' }]
   },
   {
     type: 'text',
@@ -44,23 +38,14 @@ export const nodesConfig = [
     handles: [{ type: 'source', position: Position.Right, id: 'output' }]
   },
   {
-    type: 'api',
-    label: 'API Request',
-    icon: Globe,
-    component: ApiNodeInner,
+    type: 'llm',
+    label: 'LLM',
+    icon: Brain,
+    component: LLMNodeInner,
     handles: [
-      { type: 'target', position: Position.Left, id: 'payload' },
+      { type: 'target', position: Position.Left, id: 'system' },
+      { type: 'target', position: Position.Left, id: 'prompt' },
       { type: 'source', position: Position.Right, id: 'response' }
-    ]
-  },
-  {
-    type: 'database',
-    label: 'Database Query',
-    icon: Database,
-    component: DatabaseNodeInner,
-    handles: [
-      { type: 'target', position: Position.Left, id: 'query-params' },
-      { type: 'source', position: Position.Right, id: 'results' }
     ]
   },
   {
@@ -75,6 +60,36 @@ export const nodesConfig = [
     ]
   },
   {
+    type: 'api',
+    label: 'API Request',
+    icon: Globe,
+    component: ApiNodeInner,
+    handles: [
+      { type: 'target', position: Position.Left, id: 'payload' },
+      { type: 'source', position: Position.Right, id: 'response' }
+    ]
+  },
+  {
+    type: 'toolApproval',
+    label: 'Tool Approval',
+    icon: ShieldAlert,
+    component: ToolApprovalNodeInner,
+    handles: [
+      { type: 'target', position: Position.Left, id: 'action-in' },
+      { type: 'source', position: Position.Right, id: 'action-out' }
+    ]
+  },
+  {
+    type: 'database',
+    label: 'Database Query',
+    icon: Database,
+    component: DatabaseNodeInner,
+    handles: [
+      { type: 'target', position: Position.Left, id: 'query-params' },
+      { type: 'source', position: Position.Right, id: 'results' }
+    ]
+  },
+  {
     type: 'python',
     label: 'Python Script',
     icon: Terminal,
@@ -83,5 +98,12 @@ export const nodesConfig = [
       { type: 'target', position: Position.Left, id: 'input' },
       { type: 'source', position: Position.Right, id: 'output' }
     ]
+  },
+  {
+    type: 'customOutput',
+    label: 'Output',
+    icon: Lightbulb,
+    component: OutputNodeInner,
+    handles: [{ type: 'target', position: Position.Left, id: 'value' }]
   }
 ];
